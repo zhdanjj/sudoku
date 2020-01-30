@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -66,6 +67,12 @@ module.exports = {
       chunkFilename: '[id].css',
     }),
     new VueLoaderPlugin(),
+    new CopyPlugin([
+      {
+        from: './src/manifest.json',
+        to: './',
+      },
+    ]),
   ],
   stats: 'errors-warnings',
   devtool: 'eval',
