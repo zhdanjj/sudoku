@@ -1,0 +1,213 @@
+$borderColor: #537078;
+$innerBorderWidth: 2px;
+$outerBorderWidth: 4px;
+$keyColor: #b5b8bd;
+$solutionColor: #60c1ee;
+$mainFontSize: 24px;
+$invalidCandidateColor: #666;
+$validCandidateColor: #999;
+
+body {
+  margin: 0;
+  background: #000;
+  // position: fixed;
+  // width: 100%;
+  // height: 100%;
+}
+
+.game {
+  max-width: 400px;
+  margin: auto;
+}
+
+.board {
+  border: $outerBorderWidth solid $borderColor;
+}
+
+.row {
+  display: flex;
+  border-bottom: $innerBorderWidth solid $borderColor;
+
+  &:nth-child(3n) {
+    border-bottom: $outerBorderWidth solid $borderColor;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.cell {
+  width: 11.11111%;
+  border-right: $innerBorderWidth solid $borderColor;
+  position: relative;
+  cursor: pointer;
+
+  &:nth-child(3n) {
+    border-right: $outerBorderWidth solid $borderColor;
+  }
+
+  &:last-child {
+    border-right: none;
+  }
+
+  &::before {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+  }
+
+  &::after {
+    content: attr(data-value);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: -apple-system, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    color: $solutionColor;
+    line-height: 1;
+  }
+
+  &.key {
+
+    &::after {
+      color: $keyColor;
+    }
+  }
+
+  &.highlight {
+    background: #092741;
+  }
+
+  &.same {
+    background: #1b401e;
+  }
+
+  &.selected {
+    background: #36474f;
+  }
+
+  &.error::after {
+    color: #f51414;
+  }
+}
+
+.candidates-container {
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.candidate {
+  width: 33.3333%;
+  position: relative;
+  visibility: hidden;
+  color: $invalidCandidateColor;
+  font-family: -apple-system, Arial, sans-serif;
+  font-size: 14px;
+
+  &.visible {
+    visibility: visible;
+  }
+
+  &.valid {
+    color: $validCandidateColor;
+  }
+
+  &::before {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+  }
+
+  &::after {
+    content: attr(data-value);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 0;
+  }
+
+  @media screen and (max-width: 767px) {
+    font-size: 11px;
+  }
+}
+
+.controls {
+  margin-top: 20px;
+  position: relative;
+}
+
+.controls-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.values-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  width: 105px;
+  margin-top: -5px;
+  margin-left: -5px;
+}
+
+.value {
+  width: 30px;
+  background: green;
+  color: #fff;
+  margin-top: 5px;
+  margin-left: 5px;
+  position: relative;
+  font-family: -apple-system, Arial, sans-serif;
+
+  &::before {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+  }
+
+  &::after {
+    content: attr(data-value);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.candidate-value {
+  background: #009eff;
+}
+
+.show-toolbar {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  max-width: 150px;
+}
