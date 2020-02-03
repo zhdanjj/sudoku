@@ -13,6 +13,9 @@
 │       │       │       │
 └───────┴───────┴───────┘
 */
+
+/* eslint-disable */
+
 function getRandInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -26,10 +29,10 @@ class SudokuGrid {
 
   generateBaseGrid(n = 3) {
     const grid = [];
-    for (let i = 0; i < n * n; i++) {
+    for (let i = 0; i < n * n; i += 1) {
       const row = [];
-      for (let j = 0; j < n * n; j++) {
-        row.push((i * n + Math.floor(i / n) + j) % (n * n) + 1);
+      for (let j = 0; j < n * n; j += 1) {
+        row.push(((i * n + Math.floor(i / n) + j) % (n * n)) + 1);
       }
       grid.push(row);
     }

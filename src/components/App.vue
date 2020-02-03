@@ -40,10 +40,11 @@
       <button class="show-toolbar" @click="isToolbarVisible = !isToolbarVisible">
         {{ isToolbarVisible ? '-' : '+' }}
       </button>
-      <div class="controls-wrap" v-if="!isToolbarVisible">
-        <div class="values-wrap candidates-wrap">
+      <div class="pads-container" v-if="!isToolbarVisible">
+        <div class="pad">
           <div
-            class="value candidate-value"
+            class="pad__btn pad__btn_candidate"
+            :class="getCandidateBtnClassname(i)"
             v-for="i in 9"
             :key="i"
             :data-value="i"
@@ -51,9 +52,10 @@
           >
           </div>
         </div>
-        <div class="values-wrap">
+        <div class="pad">
           <div
-            class="value"
+            class="pad__btn pad__btn_value"
+            :class="getValueBtnClassname(i)"
             v-for="i in 9"
             :key="i"
             :data-value="i"
@@ -126,7 +128,9 @@
       },
       removeInvalidCandidates() {
         this.forEachCell((r, c, cell) => {
-          cell.candidates = [...cell.validCandidates];
+          cell.candidates = cell.candidates.filter(
+            x => cell.validCandidates.includes(x)
+          );
         });
       },
       getBoxRest(row, col) {
@@ -249,6 +253,43 @@
         this.select(cell.row, cell.col, cell);
         this.validateCandidates();
         this.saveState();
+      },
+      getValueCount(n) {
+        let i = 0;
+        this.forEachCell((r, c, cell) => {
+          if (cell.value === n) {
+            i += 1;
+          }
+        });
+        return i;
+      },
+      getValueBtnClassname(n) {
+        const cn = {
+          'active': false,
+          'disabled': false,
+          'finished': false,
+        };
+        const cell = this.selectedCell;
+        if (cell) {
+          cn['disabled'] = cell.isKey;
+          cn['active'] = cell.value === n;
+          cn['finished'] = this.getValueCount(n) === 9;
+        } else {
+          cn['disabled'] = true;
+        }
+        return cn;
+      },
+      getCandidateBtnClassname(n) {
+        const cn = {
+          'active': false,
+          'disabled': false,
+        };
+        const cell = this.selectedCell;
+        if (cell) {
+          cn['active'] = cell.candidates.includes(n);
+          cn['disabled'] = cell.isKey;
+        }
+        return cn;
       },
     },
     computed: {
