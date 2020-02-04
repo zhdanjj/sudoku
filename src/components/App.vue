@@ -1,8 +1,10 @@
 <template>
   <div class="game">
     <div class="new-game-splash" v-if="!grid">
+      <div class="new-game-label">New game</div>
       <button
         v-for="level in ['simple', 'easy', 'intermediate', 'expert']"
+        class="btn new-game-btn"
         :key="level"
         @click="createGame(level)"
       >
@@ -37,7 +39,7 @@
       </div>
     </div>
     <div class="controls" v-if="grid">
-      <button class="show-toolbar" @click="isToolbarVisible = !isToolbarVisible">
+      <button class="btn show-toolbar" @click="isToolbarVisible = !isToolbarVisible">
         {{ isToolbarVisible ? '-' : '+' }}
       </button>
       <div class="pads-container" v-if="!isToolbarVisible">
@@ -65,9 +67,9 @@
         </div>
       </div>
       <div class="toolbar" v-if="isToolbarVisible">
-        <button @click="startNewGame()">New game</button>
-        <button @click="fillCandidates()">Fill candidates</button>
-        <button @click="removeInvalidCandidates()">Remove invalid candidates</button>
+        <button class="btn" @click="startNewGame()">New game</button>
+        <button class="btn" @click="fillCandidates()">Fill candidates</button>
+        <button class="btn" @click="removeInvalidCandidates()">Remove invalid candidates</button>
       </div>
     </div>
   </div>
