@@ -7,19 +7,6 @@
   <title>Sudoku</title>
 </head>
 <body>
-
-  <button id="b1">show notification</button>
-  <script>
-    document.getElementById('b1').addEventListener('click', function() {
-      Notification.requestPermission(function (permission) {
-        // Если пользователь разрешил, то создаем уведомление 
-        if (permission === "granted") {
-          var notification = new Notification("Hi there!");
-        }
-      });
- 
-    })
-  </script>
   
 </body>
 </html>
