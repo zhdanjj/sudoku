@@ -34,6 +34,7 @@ body {
 .game {
   max-width: 400px;
   margin: auto;
+  padding: 20px;
 }
 
 .board {
@@ -271,4 +272,10 @@ body {
   & + & {
     margin-top: 20px;
   }
+}
+
+.Counter {
+  color: blanchedalmond;
+  text-align: right;
+  margin-bottom: 20px;
 }

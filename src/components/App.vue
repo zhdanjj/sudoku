@@ -11,76 +11,82 @@
         {{ level }}
       </button>
     </div>
-    <div class="board" v-if="grid">
-      <div
-        class="row"
-        v-for="(row, r) in grid"
-        :key="r"
-      >
+    <template v-if="grid">
+      <Counter />
+      <div class="board">
         <div
-          class="cell"
-          :class="{ 'key': cell.isKey, 'selected': cell.isSelected, 'highlight': cell.isHighlighted, 'same': cell.isSame, 'error': cell.isError }"
-          v-for="(cell, c) in row"
-          :data-value="cell.value ? cell.value : false"
-          :key="c"
-          @click="select(r, c, cell)"
+          class="row"
+          v-for="(row, r) in grid"
+          :key="r"
         >
-          <div class="candidates-container" v-if="!cell.value">
-            <div
-              class="candidate"
-              v-for="i in 9"
-              :class="{ 'visible' : cell.candidates.includes(i), 'valid': cell.validCandidates.includes(i)}"
-              :key="i"
-              :data-value="i"
-            >
+          <div
+            class="cell"
+            :class="{ 'key': cell.isKey, 'selected': cell.isSelected, 'highlight': cell.isHighlighted, 'same': cell.isSame, 'error': cell.isError }"
+            v-for="(cell, c) in row"
+            :data-value="cell.value ? cell.value : false"
+            :key="c"
+            @click="select(r, c, cell)"
+          >
+            <div class="candidates-container" v-if="!cell.value">
+              <div
+                class="candidate"
+                v-for="i in 9"
+                :class="{ 'visible' : cell.candidates.includes(i), 'valid': cell.validCandidates.includes(i)}"
+                :key="i"
+                :data-value="i"
+              >
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="controls" v-if="grid">
-      <button class="btn show-toolbar" @click="isToolbarVisible = !isToolbarVisible">
-        {{ isToolbarVisible ? '-' : '+' }}
-      </button>
-      <div class="pads-container" v-if="!isToolbarVisible">
-        <div class="pad">
-          <div
-            class="pad__btn pad__btn_candidate"
-            :class="getCandidateBtnClassname(i)"
-            v-for="i in 9"
-            :key="i"
-            :data-value="i"
-            @click="toggleCandidate(i)"
-          >
+      <div class="controls" v-if="grid">
+        <button class="btn show-toolbar" @click="isToolbarVisible = !isToolbarVisible">
+          {{ isToolbarVisible ? '-' : '+' }}
+        </button>
+        <div class="pads-container" v-if="!isToolbarVisible">
+          <div class="pad">
+            <div
+              class="pad__btn pad__btn_candidate"
+              :class="getCandidateBtnClassname(i)"
+              v-for="i in 9"
+              :key="i"
+              :data-value="i"
+              @click="toggleCandidate(i)"
+            >
+            </div>
+          </div>
+          <div class="pad">
+            <div
+              class="pad__btn pad__btn_value"
+              :class="getValueBtnClassname(i)"
+              v-for="i in 9"
+              :key="i"
+              :data-value="i"
+              @click="toggleValue(i)"
+            >
+            </div>
           </div>
         </div>
-        <div class="pad">
-          <div
-            class="pad__btn pad__btn_value"
-            :class="getValueBtnClassname(i)"
-            v-for="i in 9"
-            :key="i"
-            :data-value="i"
-            @click="toggleValue(i)"
-          >
-          </div>
+        <div class="toolbar" v-if="isToolbarVisible">
+          <button class="btn" @click="startNewGame()">New game</button>
+          <button class="btn" @click="fillCandidates()">Fill candidates</button>
+          <button class="btn" @click="removeInvalidCandidates()">Remove invalid candidates</button>
         </div>
       </div>
-      <div class="toolbar" v-if="isToolbarVisible">
-        <button class="btn" @click="startNewGame()">New game</button>
-        <button class="btn" @click="fillCandidates()">Fill candidates</button>
-        <button class="btn" @click="removeInvalidCandidates()">Remove invalid candidates</button>
-      </div>
-    </div>
+    </template>
   </div>
 </template>
 
 <script>
-
+  import Counter from './Counter.vue'
   import { createGrid } from '../lib/utils';
   const LS_KEY_GRID = 'sudoku_grid';
 
   export default {
+    components: {
+      Counter,
+    },
     data: () => ({
       grid: null,
       isToolbarVisible: false,
