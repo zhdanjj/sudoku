@@ -66,6 +66,7 @@ body {
   border-right: $innerBorderWidth solid $borderColor;
   position: relative;
   cursor: pointer;
+  transition: background .2s;
 
   &:nth-child(3n) {
     border-right: $outerBorderWidth solid $borderColor;
@@ -119,6 +120,10 @@ body {
 
   &.error::after {
     color: #f51414;
+  }
+
+  &:hover {
+    background: #444;
   }
 }
 
@@ -200,6 +205,12 @@ body {
     position: relative;
     font-family: -apple-system, Arial, sans-serif;
     border-radius: 2px;
+    transition: filter .2s;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(.5);
+    }
   
     &::before {
       content: '';
