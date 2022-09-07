@@ -1,5 +1,5 @@
 <template>
-  <div class="game">
+  <div class="game" @contextmenu.prevent="() => false">
     <div class="new-game-splash" v-if="!grid">
       <div class="new-game-label">New game</div>
       <button
