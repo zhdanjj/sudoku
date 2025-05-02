@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $borderColor: #537078;
 $innerBorderWidth: 2px;
 $outerBorderWidth: 4px;
@@ -235,11 +237,11 @@ body {
       font-size: 80%;
 
       &.active {
-        background: darken($candidateBtnColor, 10%);
+        background: color.adjust($candidateBtnColor, $lightness: -10%);
       }
 
       &.disabled {
-        background: rgba(lighten($candidateBtnColor, 30%), .9);
+        background: rgba(color.adjust($candidateBtnColor, $lightness: 30%), .9);
       }
     }
 
@@ -248,15 +250,15 @@ body {
       font-size: 120%;
 
       &.active {
-        background: darken($valueBtnColor, 10%);
+        background: color.adjust($valueBtnColor, $lightness: 10%);
       }
 
       &.disabled {
-        background: rgba(lighten($valueBtnColor, 60%), .9);
+        background: rgba(color.adjust($valueBtnColor, $lightness: 60%), .9);
       }
 
       &.finished {
-        background: rgba(lighten($valueBtnColor, 90%), .6);
+        background: rgba(color.adjust($valueBtnColor, $lightness: 90%), .6);
       }
     }
   }
